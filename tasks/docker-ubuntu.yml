@@ -1,0 +1,44 @@
+---
+# https://docs.docker.com/install/linux/docker-ce/debian/
+
+- name: Ensure old versions of Docker are not installed.
+  apt:
+    name: "{{ packages }}"
+    state: absent
+    autoremove: yes
+    purge: yes
+  vars:
+    packages:
+    - docker
+    - docker-engine
+    - docker.io
+
+- name: Install pre-requisite packages for Docker and docker-compose
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg2
+    - software-properties-common
+    - python-pip
+
+- name: Add Docker apt Debian key.
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    id: 0EBFCD88
+    state: present
+
+- name: Add Docker Ubuntu repository.
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+    update_cache: yes
+
+- name: Install Docker.
+  apt:
+    name: docker-ce
+    state: present

@@ -1,6 +1,8 @@
 ansible-mailcow
 =================
 
+#### THIS is a quick hack to port the chriswayg/ansible-mailcow to Ubunutu 18.04 LTS. 
+
 #### Ansible role for an initial install of the mailcow mailserver and groupware
 
 - installs Docker and docker-compose

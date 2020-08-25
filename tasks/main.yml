@@ -13,11 +13,15 @@
     upgrade: "yes"
     update_cache: yes
     cache_valid_time: 86400 #One day
-  when: ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian" or ansible_os_family == "Ubuntu"
 
 - name: Ensure Docker is installed.
   include_tasks: docker-debian.yml
   when: ansible_os_family == "Debian"
+
+- name: Ensure Docker is installed.
+  include_tasks: docker-ubuntu.yml
+  when: ansible_os_family == "Ubuntu"
 
 # pip installation of docker-compose is needed for ansible docker_service to work
 # - https://docs.docker.com/compose/install/#alternative-install-options
